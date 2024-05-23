@@ -1,18 +1,31 @@
 
 
-### project variable, tags##
 variable "project_name" {
-    type = string
+    default = "expense"
 }
 
-variable "environment" {    #tagging for user for easy access and readability
-    type = string
-    default = "dev"     # we gave default value we will be using only dev here in project
+variable "environment" {
+    default = "dev"
 }
 
 variable "common_tags" {
-    type = map
-  
+    default = {
+        Project = "expense"
+        Environment = "dev"
+        Terraform = "true"
+    }
+}
+
+variable "public_subnet_cidrs" {
+    default = ["10.0.1.0/24","10.0.2.0/24"]
+}
+
+variable "private_subnet_cidrs" {
+    default = ["10.0.11.0/24","10.0.12.0/24"]
+}
+
+variable "database_subnet_cidrs" {
+    default = ["10.0.21.0/24","10.0.22.0/24"]
 }
 
 
@@ -39,18 +52,56 @@ variable "aws_internet_gateway_tags" {
     default = {}     # we give empty deafult , user has to provide
 }
 
-## public subnet
+# ## public subnet
 
-variable "public_subnet_cidrs" {    # cidrs beacuse its plural , we have 2 subnets
-    type = list
-    validation {        ## here we gave validation and condition for the user to give only 2 cidrs
-      condition = length(var.public_subnet_cidrs) == 2
-      error_message = "please provide 2 valid public subnet CIDR"
-    }                        
+# variable "public_subnet_cidrs" {    # cidrs beacuse its plural , we have 2 subnets
+#     type = list
+#     validation {        ## here we gave validation and condition for the user to give only 2 cidrs
+#       condition = length(var.public_subnet_cidrs) == 2
+#       error_message = "please provide 2 valid public subnet CIDR"
+#     }                        
   
-}
+# }
 
 variable "public_subnet_cidr_tags" {
     type = map
     default = {} 
 }
+
+
+# ## private subnet
+
+# variable "private_subnet_cidrs" {    # cidrs beacuse its plural , we have 2 subnets
+#     type = list
+#     validation {        ## here we gave validation and condition for the user to give only 2 cidrs
+#       condition = length(var.private_subnet_cidrs) == 2
+#       error_message = "please provide 2 valid private subnet CIDR"
+#     }                        
+  
+# }
+
+
+variable "private_subnet_cidr_tags" {
+    type = map
+    default = {} 
+}
+
+
+
+
+# ## data base subnet
+
+# variable "database_subnet_cidrs" {    # cidrs beacuse its plural , we have 2 subnets
+#     type = list
+#     validation {        ## here we gave validation and condition for the user to give only 2 cidrs
+#       condition = length(var.database_subnet_cidrs) == 2
+#       error_message = "please provide 2 valid database subnet CIDR"
+#     }                        
+  
+# }
+
+variable "database_subnet_cidr_tags" {
+    type = map
+    default = {} 
+}
+
